@@ -1,12 +1,15 @@
 "use client";
 
-import { Bell, ChevronRight, CreditCard, Edit3, Heart, HelpCircle, LucideLocationEdit, NotebookPen, Package, Rainbow, Settings, ShoppingBag, Store, Truck, Verified, Wallet } from "lucide-react";
+import { Bell, ChevronRight, CreditCard, Edit3, Heart, HelpCircle, LucideLocationEdit, Moon, NotebookPen, Package, Rainbow, Settings, ShoppingBag, Store, Truck, Verified, Wallet } from "lucide-react";
 
+import { Sun } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db, auth } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import { signOut } from "firebase/auth";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -39,6 +42,17 @@ export default function ProfilePage() {
     ? new Date(profileData.createdAt.seconds * 1000).getFullYear()
     : new Date().getFullYear();
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/login"); // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+
+  const { theme, setTheme } = useTheme();
+
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark border-x dark:border-slate-800 shadow-xl">
       {/* Top App Bar */}
@@ -46,8 +60,11 @@ export default function ProfilePage() {
         <h2 className="text-xl font-bold tracking-tight text-center flex-1">
           Profile
         </h2>
-        <button className="absolute right-4 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300">
-          <Settings />
+        <button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="absolute right-4 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300"
+        >
+          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
         </button>
       </header>
       {/* Profile Header */}
@@ -188,9 +205,9 @@ export default function ProfilePage() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="bg-primary/10 text-primary text-xs font-bold px-2 py-0.5 rounded-full">
+                {/* <span className="bg-primary/10 text-primary text-xs font-bold px-2 py-0.5 rounded-full">
                   5
-                </span>
+                </span> */}
                 <ChevronRight className="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors" />
               </div>
             </button>
@@ -252,9 +269,9 @@ export default function ProfilePage() {
           </div>
         </section>
         {/* Logout */}
-        <a href="/login" className="w-full text-center mt-4 mb-24 py-3 text-red-500 font-semibold bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+        <button onClick={handleLogout} className="w-full text-center mt-4 mb-24 py-3 text-red-500 font-semibold bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
           Log Out
-        </a>
+        </button>
       </div>
     </div>
   );

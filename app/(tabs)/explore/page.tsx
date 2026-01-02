@@ -68,7 +68,7 @@ export default function ExploreScreen() {
           </div>
           {/* Actions */}
           <div className="flex items-center justify-end gap-3">
-            <button className="relative flex items-center justify-center text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors">
+            <button onClick={()=> alert('Notifications coming soon!')} className="relative flex items-center justify-center text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors">
               <Bell strokeWidth={1.5} />
               <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-background-dark" />
             </button>
