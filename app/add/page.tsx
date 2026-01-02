@@ -8,6 +8,8 @@ import { useAuth } from "@/context/AuthContext";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
 
+import { SMARTPHONE_MODELS } from "@/data/smartphone_models";
+
 export default function AddScreen() {
     const router = useRouter();
     const { user } = useAuth();
@@ -15,7 +17,7 @@ export default function AddScreen() {
 
     // Form State
     const [brand, setBrand] = useState("Apple");
-    const [model, setModel] = useState("iPhone 14 Pro");
+    const [model, setModel] = useState(SMARTPHONE_MODELS["Apple"][0]);
     const [condition, setCondition] = useState("Good");
     const [storageOption, setStorageOption] = useState("128 GB");
     const [color, setColor] = useState("Midnight");
@@ -23,6 +25,19 @@ export default function AddScreen() {
     const [description, setDescription] = useState("");
     const [images, setImages] = useState<File[]>([]);
     const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+
+    // ... handles ...
+
+    const handleBrandChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const newBrand = e.target.value;
+        setBrand(newBrand);
+        // Reset model to first in list for new brand
+        if (SMARTPHONE_MODELS[newBrand]?.length > 0) {
+            setModel(SMARTPHONE_MODELS[newBrand][0]);
+        } else {
+            setModel("");
+        }
+    };
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -161,7 +176,7 @@ export default function AddScreen() {
                                 <div className="relative">
                                     <select
                                         value={brand}
-                                        onChange={(e) => setBrand(e.target.value)}
+                                        onChange={handleBrandChange}
                                         className="w-full appearance-none rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 py-3.5 pl-4 pr-10 text-slate-900 dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-base"
                                     >
                                         <option value="Apple">Apple</option>
@@ -184,11 +199,11 @@ export default function AddScreen() {
                                         onChange={(e) => setModel(e.target.value)}
                                         className="w-full appearance-none rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 py-3.5 pl-4 pr-10 text-slate-900 dark:text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-base"
                                     >
-                                        <option value="iPhone 14 Pro">iPhone 14 Pro</option>
-                                        <option value="iPhone 14">iPhone 14</option>
-                                        <option value="iPhone 13">iPhone 13</option>
-                                        <option value="Galaxy S23 Ultra">Galaxy S23 Ultra</option>
-                                        <option value="Pixel 7 Pro">Pixel 7 Pro</option>
+                                        {SMARTPHONE_MODELS[brand]?.map((modelName) => (
+                                            <option key={modelName} value={modelName}>
+                                                {modelName}
+                                            </option>
+                                        ))}
                                     </select>
                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500">
                                         <span className="material-symbols-outlined">expand_more</span>

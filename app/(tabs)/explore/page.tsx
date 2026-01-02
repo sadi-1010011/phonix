@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { formatTimeAgo } from "@/utils/formatTimeAgo";
 
 interface Listing {
   id: string;
@@ -68,7 +69,7 @@ export default function ExploreScreen() {
           </div>
           {/* Actions */}
           <div className="flex items-center justify-end gap-3">
-            <button onClick={()=> alert('Notifications coming soon!')} className="relative flex items-center justify-center text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors">
+            <button onClick={() => router.push('/notifications')} className="relative flex items-center justify-center text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors">
               <Bell strokeWidth={1.5} />
               <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-background-dark" />
             </button>
@@ -127,7 +128,7 @@ export default function ExploreScreen() {
                   <div className="absolute bottom-0 w-full bg-linear-to-t from-black/60 to-transparent p-2">
                     <span className="text-[10px] text-white font-medium flex items-center gap-1">
                       <span className="material-symbols-outlined text-[12px]">schedule</span>
-                      Here
+                      {formatTimeAgo(item.createdAt?.toDate())}
                     </span>
                   </div>
                 </div>

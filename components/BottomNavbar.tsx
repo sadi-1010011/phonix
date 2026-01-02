@@ -41,7 +41,7 @@ export default function BottomNavbar() {
 
         <a
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${ pathname === '/chat' ? 'text-primary' : 'hover:text-slate-600 dark:hover:text-slate-300 group' }`}
-          href="/chat"
+          href="/inbox"
         >
           <MessageCircleMore className={`text-[24px] ${ pathname === '/chat' ? 'fill-current' : 'group-hover:-translate-y-0.5 transition-transform'}`} />
           <span className="text-[10px] font-medium">Inbox</span>

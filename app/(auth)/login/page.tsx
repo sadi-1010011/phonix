@@ -329,7 +329,7 @@ export default function AuthPage() {
       <div className="mt-auto px-6 py-6 pb-8 text-center">
         <Link
           className="text-slate-500 hover:text-primary dark:text-slate-400 text-sm font-medium transition-colors"
-          href="/explore"
+          href="/"
         >
           Skip for now
         </Link>

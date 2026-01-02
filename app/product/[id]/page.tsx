@@ -6,6 +6,8 @@ import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 
+import { createOrGetChat } from "@/lib/chat";
+
 interface Listing {
     id: string;
     brand: string;
@@ -17,6 +19,7 @@ interface Listing {
     description: string;
     imageUrls: string[];
     sellerName: string;
+    sellerId: string;
     createdAt: any;
 }
 
@@ -30,6 +33,7 @@ export default function ProductScreen() {
     const [loading, setLoading] = useState(true);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [isSaved, setIsSaved] = useState(false);
+    const [chatLoading, setChatLoading] = useState(false);
 
     useEffect(() => {
         if (id && user) {
@@ -59,6 +63,40 @@ export default function ProductScreen() {
             }
         } catch (error) {
             console.error("Error toggling save:", error);
+        }
+    };
+
+    const handleChat = async () => {
+        if (!user) {
+            // Redirect to login or show auth modal
+            router.push("/(auth)/welcome");
+            return;
+        }
+
+        if (!listing) return;
+
+        if (user.uid === listing.sellerId) {
+            alert("You cannot chat with yourself");
+            return;
+        }
+
+        setChatLoading(true);
+        try {
+            // Create a composite name/image if needed, or just pass listing info
+            const chat = await createOrGetChat(
+                user.uid,
+                listing.sellerId,
+                listing.id,
+                `${listing.brand} ${listing.model}`,
+                listing.imageUrls[0]
+            );
+
+            router.push(`/chat?id=${chat.id}`);
+        } catch (error) {
+            console.error("Error initiating chat:", error);
+            alert("Failed to start chat. Please try again.");
+        } finally {
+            setChatLoading(false);
         }
     };
 
@@ -278,9 +316,19 @@ export default function ProductScreen() {
             {/* Sticky Bottom Action Bar */}
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-background-light/95 dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-30">
                 <div className="flex gap-3 max-w-2xl mx-auto">
-                    <button className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-primary/10 dark:bg-white/10 text-primary dark:text-white font-bold text-base transition-colors hover:bg-primary/20">
-                        <span className="material-symbols-outlined">chat_bubble</span>
-                        Chat
+                    <button
+                        onClick={handleChat}
+                        disabled={chatLoading}
+                        className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-primary/10 dark:bg-white/10 text-primary dark:text-white font-bold text-base transition-colors hover:bg-primary/20 disabled:opacity-50"
+                    >
+                        {chatLoading ? (
+                            <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                            <>
+                                <span className="material-symbols-outlined">chat_bubble</span>
+                                Chat
+                            </>
+                        )}
                     </button>
                     <button className="flex-2 flex items-center justify-center h-12 rounded-xl bg-primary text-white font-bold text-base shadow-lg shadow-primary/30 transition-transform active:scale-[0.98]">
                         Buy Now for ${listing.price}
