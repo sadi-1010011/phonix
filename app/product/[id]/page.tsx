@@ -7,21 +7,7 @@ import { db, auth } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 
 import { createOrGetChat } from "@/lib/chat";
-
-interface Listing {
-    id: string;
-    brand: string;
-    model: string;
-    condition: string;
-    storage: string;
-    color: string;
-    price: number;
-    description: string;
-    imageUrls: string[];
-    sellerName: string;
-    sellerId: string;
-    createdAt: any;
-}
+import { Listing } from "@/types/listing";
 
 export default function ProductScreen() {
     const router = useRouter();
@@ -108,6 +94,7 @@ export default function ProductScreen() {
                     const docSnap = await getDoc(docRef);
 
                     if (docSnap.exists()) {
+                        console.log(docSnap.data())
                         setListing({ id: docSnap.id, ...docSnap.data() } as Listing);
                     } else {
                         console.log("No such document!");
@@ -237,8 +224,8 @@ export default function ProductScreen() {
                                 <div className="size-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl font-bold">
                                     {listing.sellerName ? listing.sellerName[0].toUpperCase() : 'U'}
                                 </div>
-                                <div className="absolute -bottom-1 -right-1 bg-primary text-white rounded-full p-0.5 border-2 border-white dark:border-gray-800">
-                                    <span className="material-symbols-outlined text-[12px] block">
+                                <div className="absolute -bottom-1 -right-1 bg-primary aspect-square w-8 h-8 text-white rounded-full p-0.5 border-2 border-white dark:border-gray-800">
+                                    <span className="material-symbols-outlined text-[12px] ">
                                         check
                                     </span>
                                 </div>
@@ -281,14 +268,14 @@ export default function ProductScreen() {
                                 {listing.storage}
                             </span>
                         </div>
-                        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700 flex flex-col gap-1">
+                        {/* <div className="bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-100 dark:border-gray-700 flex flex-col gap-1">
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                                 Box
                             </span>
                             <span className="text-sm font-semibold text-[#0d121b] dark:text-white">
                                 Included
                             </span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* Description */}
@@ -304,10 +291,10 @@ export default function ProductScreen() {
                 {/* Safety Disclaimer */}
                 <div className="px-4 py-4 mb-4 flex justify-center">
                     <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                        <span className="material-symbols-outlined text-[16px]">
+                        <span className="material-symbols-outlined text-[12px]">
                             shield
                         </span>
-                        <span className="text-xs font-medium underline">
+                        <span className="text-xs font-medium">
                             Safety Tips for Meeting Sellers
                         </span>
                     </div>
@@ -331,7 +318,7 @@ export default function ProductScreen() {
                         )}
                     </button>
                     <button className="flex-2 flex items-center justify-center h-12 rounded-xl bg-primary text-white font-bold text-base shadow-lg shadow-primary/30 transition-transform active:scale-[0.98]">
-                        Buy Now for ${listing.price}
+                        Buy Now for ₹{listing.price}
                     </button>
                 </div>
             </div>

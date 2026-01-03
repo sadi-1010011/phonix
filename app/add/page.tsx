@@ -61,6 +61,7 @@ export default function AddScreen() {
 
     const handleSubmit = async () => {
         if (!user) return;
+        console.log(user)
         setLoading(true);
 
         try {

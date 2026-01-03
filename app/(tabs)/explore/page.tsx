@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Heart, ShoppingBag } from "lucide-react";
+import { Bell, Eye, Heart, ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
@@ -149,9 +149,7 @@ export default function ExploreScreen() {
                       ₹{item.price}
                     </span>
                     <button className="text-text-sec-light hover:text-primary transition-colors">
-                      <span className="material-symbols-outlined text-[20px]">
-                        add_circle
-                      </span>
+                      <Eye className="size-5" />
                     </button>
                   </div>
                 </div>

@@ -19,7 +19,7 @@ export default function BottomNavbar() {
           className={`flex flex-col items-center justify-center w-full h-full gap-1 ${ pathname === '/explore' ? 'text-primary' : 'hover:text-slate-600 dark:hover:text-slate-300 group' }`}
           href="/explore"
         >
-          <Home className={`text-[24px] ${ pathname === '/' ? 'fill-current' : 'group-hover:-translate-y-0.5 transition-transform'}`} />
+          <Home className={`text-[24px] ${ pathname === '/explore' ? 'fill-current' : 'group-hover:-translate-y-0.5 transition-transform'}`} />
           <span className="text-[10px] font-medium">Home</span>
         </a>
         <a
@@ -40,10 +40,10 @@ export default function BottomNavbar() {
         </div>
 
         <a
-          className={`flex flex-col items-center justify-center w-full h-full gap-1 ${ pathname === '/chat' ? 'text-primary' : 'hover:text-slate-600 dark:hover:text-slate-300 group' }`}
+          className={`flex flex-col items-center justify-center w-full h-full gap-1 ${ pathname === '/inbox' ? 'text-primary' : 'hover:text-slate-600 dark:hover:text-slate-300 group' }`}
           href="/inbox"
         >
-          <MessageCircleMore className={`text-[24px] ${ pathname === '/chat' ? 'fill-current' : 'group-hover:-translate-y-0.5 transition-transform'}`} />
+          <MessageCircleMore className={`text-[24px] ${ pathname === '/inbox' ? 'fill-current' : 'group-hover:-translate-y-0.5 transition-transform'}`} />
           <span className="text-[10px] font-medium">Inbox</span>
         </a>
         <a

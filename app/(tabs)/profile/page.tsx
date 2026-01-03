@@ -117,7 +117,7 @@ export default function ProfilePage() {
               To Ship
             </span>
             <span className="text-lg font-bold text-slate-900 dark:text-white">
-              3
+              0
             </span>
           </div>
           <div className="flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
@@ -128,7 +128,7 @@ export default function ProfilePage() {
               To Receive
             </span>
             <span className="text-lg font-bold text-slate-900 dark:text-white">
-              1
+              0
             </span>
           </div>
           <div className="flex flex-col items-center justify-center p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
@@ -139,7 +139,7 @@ export default function ProfilePage() {
               Wallet
             </span>
             <span className="text-lg font-bold text-slate-900 dark:text-white">
-              $840
+              ₹50
             </span>
           </div>
         </div>

@@ -159,7 +159,7 @@ export default function ChatScreen() {
                 <div className="flex justify-center">
                     <div className="bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200 px-4 py-2 rounded-lg text-xs font-medium text-center max-w-xs border border-yellow-100 dark:border-yellow-900/30">
                         <span className="flex items-center justify-center gap-1">
-                            <span className="material-symbols-outlined text-[16px]">shield</span>
+                            <span className="material-symbols-outlined text-[12px]">shield</span>
                             For your safety, keep all transactions within the app.
                         </span>
                     </div>

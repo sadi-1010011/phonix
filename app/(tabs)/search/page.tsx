@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import { ShoppingBag } from "lucide-react";
 
 interface Listing {
   id: string;
@@ -57,8 +58,8 @@ export default function SearchPage() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-100 dark:border-gray-700">
-              <span className="material-symbols-outlined">shopping_cart</span>
+            <button onClick={() => router.push('/saved-items')} className="flex items-center justify-center text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors">
+              <ShoppingBag className="text-[26px]" strokeWidth={1} />
             </button>
           </div>
         </div>
@@ -88,8 +89,8 @@ export default function SearchPage() {
         </div>
         {/* Categories Chips */}
         <div className="flex gap-2 px-4 pb-4 overflow-x-auto hide-scrollbar snap-x no-scrollbar">
-          {["All Phones", "Apple", "Samsung", "Google", "Under $300"].map(cat => (
-            <button key={cat} onClick={() => setSearchText(cat === "All Phones" ? "" : cat === "Under $300" ? "" : cat)} className="snap-start shrink-0 flex items-center justify-center px-4 h-9 rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-sm font-medium whitespace-nowrap hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          {["All Phones", "Apple", "Samsung", "Google"].map(cat => (
+            <button key={cat} onClick={() => setSearchText(cat === "All Phones" ? "" : cat)} className={`snap-start shrink-0 flex items-center justify-center px-4 h-9 rounded-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-sm font-medium whitespace-nowrap hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${searchText === cat ? "bg-primary dark:bg-primary" : ""}`}>
               {cat}
             </button>
           ))}
@@ -144,7 +145,7 @@ export default function SearchPage() {
                   </p>
                   <div className="mt-1.5 flex items-center justify-between">
                     <span className="font-display text-base font-bold text-primary">
-                      ${item.price}
+                      ₹{item.price}
                     </span>
                     <span className="rounded bg-green-100 dark:bg-green-900/30 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800">
                       VERIFIED

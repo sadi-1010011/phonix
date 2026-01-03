@@ -34,7 +34,6 @@ const ChatListItem = ({ chat, currentUserId }: { chat: Chat, currentUserId: stri
     fetchOtherUser();
   }, [chat.participants, currentUserId]);
 
-  // console.log(otherUser)
   const otherUserName = otherUser?.name || "User";
 
   return (
@@ -118,7 +117,7 @@ export default function InboxScreen() {
         </h2>
         <div className="flex items-center justify-end">
           <button className="flex items-center justify-center rounded-full h-10 w-10 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-primary">
-            <Edit size={22} />
+            <Edit onClick={()=> alert('Edit Chats - Not implemented yet')} size={22} />
           </button>
         </div>
       </div>
